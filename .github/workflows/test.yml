@@ -1,0 +1,22 @@
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [labeled, opened, synchronize, reopened, review_requested, ready_for_review]
+  pull_request_review:
+    types: [submitted]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: wimpysworld/nothing-but-nix@main
+      - uses: cachix/install-nix-action@v31
+      - uses: DeterminateSystems/magic-nix-cache-action@v13
+      - uses: actions/checkout@v4
+      - run: nix profile add nixpkgs#nix-unit nixpkgs#treefmt nixpkgs#nixfmt
+      - run: nix-unit ./tests.nix
+      - run: treefmt --ci
