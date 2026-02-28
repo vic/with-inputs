@@ -27,8 +27,8 @@ local checkouts, or any other source.
 
 Example `with-inputs` usage:
 
-- [npins](https://github.com/vic/flake-file/tree/main/templates/npins)
-- [nixlock](https://github.com/vic/flake-file/tree/main/templates/nixlock)
+- [npins](https://github.com/vic/flake-file/blob/main/templates/npins/default.nix)
+- [nixlock](https://github.com/vic/flake-file/blob/main/templates/nixlock/default.nix)
 
 
 ## Usage
@@ -45,13 +45,14 @@ Or use `builtins.fetchurl` with a fixed revision of it.
 # default.nix
 let
    sources = import ./npins; # example with npins. use any other sources.
+   inputs-overrides = { }; # optional, eg local checkouts { foo = import ../foo; }
    with-inputs = import ./with-inputs.nix;
    outputs = inputs: { }; # your flake-like outputs function
 in 
 # * First agument is an attrset of fetched inputs.
 # * Second only needed for follows/local-checkout-overrides.
 # * Third argument is flakes-like function inputs -> outputs.
-with-inputs sources { } outputs
+with-inputs sources inputs-overrides outputs
 ```
 
 ### Follows and local checkout overrides
