@@ -39,20 +39,24 @@ Download our `default.nix` into your project `./with-inputs.nix`.
 curl https://raw.githubusercontent.com/vic/with-inputs/refs/heads/main/default.nix -o with-inputs.nix
 ```
 
-Or use `builtins.fetchurl` with a fixed revision of it.
+Or use npins or `builtins.fetchTarball` with a fixed revision of it.
+
+```shell
+npins add github vic with-inputs
+```
 
 ```nix
 # default.nix
 let
    sources = import ./npins; # example with npins. use any other sources.
-   inputs-overrides = { }; # optional, eg local checkouts { foo = import ../foo; }
-   with-inputs = import ./with-inputs.nix;
+   with-inputs = import sources.with-inputs;
+   locals = { }; # eg local checkouts { foo.outPath = ../foo; }
    outputs = inputs: { }; # your flake-like outputs function
 in 
 # * First agument is an attrset of fetched inputs.
 # * Second only needed for follows/local-checkout-overrides.
 # * Third argument is flakes-like function inputs -> outputs.
-with-inputs sources inputs-overrides outputs
+with-inputs sources locals outputs
 ```
 
 ### Follows and local checkout overrides
