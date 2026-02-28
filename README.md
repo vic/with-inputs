@@ -61,25 +61,7 @@ The second argument to `with-inputs` is an attribute set that
 can be used to drive input resolution, for example to use local
 checkout or to specify flake-like follows.
 
-The best practice is to have an `inputs.nix` file.
-Because this very same file can be given to other tools,
-for example `flake-file` can use it to populate npins, or `unflake`
-consume it.
-
 ```nix
-# default.nix
-let
-   sources = ...;
-   inputs = import ./inputs.nix;
-   outputs = inputs: { ... }; 
-in
-with-inputs sources inputs outputs
-```
-
-Your `inputs.nix` file is just what you'd use as flake `.inputs` values:
-
-```nix
-# inputs.nix
 {
     # Local checkout — loaded as a flake if a flake.nix is present
     mylib.outPath = ./mylib;
