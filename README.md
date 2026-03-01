@@ -23,12 +23,11 @@ local checkouts, or any other source.
 > This library is not an inputs lock mechanism nor an inputs fetcher, for
 > those we have plenty of options: npins, unflake, nixlock, nixtamal.
 
-## Examples
-
-Example `with-inputs` usage:
+## Examples with different Nix pinning tools
 
 - [npins](https://github.com/vic/flake-file/blob/main/templates/npins/default.nix)
 - [nixlock](https://github.com/vic/flake-file/blob/main/templates/nixlock/default.nix)
+- [unflake](https://github.com/vic/flake-file/blob/main/templates/unflake/default.nix)
 
 
 ## Usage
