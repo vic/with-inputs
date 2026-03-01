@@ -49,14 +49,13 @@ npins add github vic with-inputs
 # default.nix
 let
    sources = import ./npins; # example with npins. use any other sources.
-   with-inputs = import sources.with-inputs;
-   locals = { }; # eg local checkouts { foo.outPath = ../foo; }
+   with-inputs = import sources.with-inputs sources {
+     # keep reading for follows and local inputs
+   };
+
    outputs = inputs: { }; # your flake-like outputs function
 in 
-# * First agument is an attrset of fetched inputs.
-# * Second only needed for follows/local-checkout-overrides.
-# * Third argument is flakes-like function inputs -> outputs.
-with-inputs sources locals outputs
+with-inputs outputs
 ```
 
 ### Follows and local checkout overrides
